@@ -248,25 +248,22 @@
       </div>
     </div>
 
-    <!-- Remplacer par la vraie photo de Guillaume + patate une fois disponible. Structure prévue
-         pour un remplacement simple : soit ajouter une balise <img> à la place du contenu ci-dessous
-         à l'intérieur de #heroVisual, soit mettre la photo en background-image sur ce conteneur. -->
+    <!-- Photo réelle de Guillaume + patate. Pour la remplacer par une future photo "principale",
+         changer simplement le src ci-dessous (garder le ratio portrait pour un cadrage cohérent). -->
     <div id="heroVisual" class="reveal relative mt-14 md:mt-16 flex justify-center">
-      <div class="relative w-64 h-64 sm:w-80 sm:h-80">
-        <div class="absolute left-1/2 top-2 -translate-x-1/2 flex gap-4 text-3xl text-ink/25 z-10">
+      <div class="relative w-56 sm:w-64">
+        <div class="absolute -top-5 left-1/2 -translate-x-1/2 flex gap-4 text-3xl text-ink/25 z-10">
           <span class="steam steam-1">〜</span>
           <span class="steam steam-2">〜</span>
           <span class="steam steam-3">〜</span>
         </div>
-        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 w-full h-14 rounded-[50%] bg-cream2/80 blur-[1px]"></div>
-        <div class="potato-body absolute bottom-12 left-1/2 -translate-x-1/2 w-[85%] h-[62%] shadow-xl -rotate-2">
-          <div class="potato-cut absolute -top-3 left-1/2 -translate-x-1/2 w-[72%] h-[46%] shadow-inner overflow-hidden">
-            <div class="absolute top-1.5 left-1/2 -translate-x-1/2 w-9 h-6 rounded bg-gold/90 shadow-sm"></div>
-            <div class="absolute bottom-2 left-4 w-5 h-1 rounded-full bg-sage rotate-[20deg]"></div>
-            <div class="absolute bottom-3 right-5 w-4 h-1 rounded-full bg-sage -rotate-[15deg]"></div>
-            <div class="absolute bottom-1 left-1/2 w-4 h-1 rounded-full bg-sage rotate-[50deg]"></div>
-          </div>
-        </div>
+        <div class="absolute -inset-3 rounded-[2.5rem] bg-cream2/70 -rotate-2"></div>
+        <img
+          src="images/hero-guillaume-patate.jpg"
+          alt="Guillaume, fondateur de Chaud Patate, tenant une jacked potato fraîchement garnie"
+          class="relative w-full aspect-[3/4] object-cover rounded-[2rem] shadow-xl border-4 border-cream rotate-1"
+          width="1200" height="1600"
+        />
       </div>
     </div>
   </section>
