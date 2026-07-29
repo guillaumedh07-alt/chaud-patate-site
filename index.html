@@ -156,9 +156,9 @@
   }
   .link-underline:hover { background-size: 100% 1px; }
 
-  /* hero potato frame sequence — current frame swapped in JS, synced to scroll */
-  #patateFrame { opacity: 0; transition: opacity .3s ease; }
-  #patateFrame.is-ready { opacity: 1; }
+  /* hero potato frame sequence — current frame painted to canvas in JS, synced to scroll */
+  #patateCanvas { opacity: 0; transition: opacity .3s ease; display: block; }
+  #patateCanvas.is-ready { opacity: 1; }
 
   /* hero background photo — dimmed/desaturated so it stays ambience, not the focal point */
   .hero-bg-photo {
@@ -284,7 +284,7 @@
             <span data-i18n="hero.loading">Chargement</span>
           </div>
 
-          <img id="patateFrame" alt="" aria-hidden="true" class="relative w-full aspect-[1024/576] object-contain" />
+          <canvas id="patateCanvas" width="1024" height="576" aria-hidden="true" class="relative w-full aspect-[1024/576]"></canvas>
         </div>
       </div>
 
@@ -911,19 +911,30 @@
   const frameUrls = Array.from({ length: FRAME_COUNT }, (_, i) =>
     `images/patate-frames/frame_${String(i + 1).padStart(3, '0')}.webp`
   );
-  const patateFrameEl = document.getElementById('patateFrame');
+  const patateCanvasEl = document.getElementById('patateCanvas');
+  const patateCtx = patateCanvasEl.getContext('2d');
   const frameLoaderEl = document.getElementById('frameLoader');
-  const frameImages = [];
+  // Painted to a <canvas> from pre-decoded ImageBitmaps rather than swapping an <img src>
+  // on every scroll update — decoding a WebP on every frame change (60x per scrub) is
+  // noticeably janky in Safari; decoding once up front and just blitting the bitmap to
+  // canvas keeps every subsequent frame change essentially free.
+  const frameBitmaps = new Array(FRAME_COUNT);
   let framesLoaded = 0;
+  let lastDrawnFrame = -1;
 
   function setFrame(index) {
     const clamped = Math.max(0, Math.min(FRAME_COUNT - 1, Math.round(index)));
-    patateFrameEl.src = frameUrls[clamped];
+    if (clamped === lastDrawnFrame) return;
+    lastDrawnFrame = clamped;
+    const bitmap = frameBitmaps[clamped];
+    if (!bitmap) return;
+    patateCtx.clearRect(0, 0, patateCanvasEl.width, patateCanvasEl.height);
+    patateCtx.drawImage(bitmap, 0, 0, patateCanvasEl.width, patateCanvasEl.height);
   }
 
   function initHeroSequence() {
     setFrame(0);
-    patateFrameEl.classList.add('is-ready');
+    patateCanvasEl.classList.add('is-ready');
     frameLoaderEl.style.display = 'none';
 
     if (isDesktop) {
@@ -976,14 +987,26 @@
     }
   }
 
-  frameUrls.forEach((url) => {
-    const img = new Image();
-    img.onload = img.onerror = () => {
-      framesLoaded++;
-      if (framesLoaded === FRAME_COUNT) initHeroSequence();
-    };
-    img.src = url;
-    frameImages.push(img);
+  function frameLoaded() {
+    framesLoaded++;
+    if (framesLoaded === FRAME_COUNT) initHeroSequence();
+  }
+
+  const supportsImageBitmap = typeof window.createImageBitmap === 'function';
+  frameUrls.forEach((url, i) => {
+    if (supportsImageBitmap) {
+      fetch(url)
+        .then((res) => res.blob())
+        .then((blob) => createImageBitmap(blob))
+        .then((bitmap) => { frameBitmaps[i] = bitmap; frameLoaded(); })
+        .catch(() => frameLoaded());
+    } else {
+      // Fallback for browsers without createImageBitmap: a plain <img> element still
+      // works as a drawImage() source once loaded, just without the up-front decode.
+      const img = new Image();
+      img.onload = img.onerror = () => { frameBitmaps[i] = img; frameLoaded(); };
+      img.src = url;
+    }
   });
 
   // ---------- Reveal-on-scroll for all other sections/cards (simple fade-up,
