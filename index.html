@@ -156,18 +156,9 @@
   }
   .link-underline:hover { background-size: 100% 1px; }
 
-  /* hero potato illustration — builds up (sauce + toppings) as the visitor scrolls, see JS */
-  .potato-body {
-    border-radius: 46% 44% 50% 50% / 60% 58% 42% 42%;
-    background: linear-gradient(155deg, #c78a51 0%, #a5652f 55%, #8a5023 100%);
-  }
-  .potato-cut {
-    border-radius: 50%;
-    background: linear-gradient(180deg, #f6e6bd 0%, #e9cd93 100%);
-  }
-  .sauce-fill {
-    background: linear-gradient(180deg, rgba(199,146,58,0.92) 0%, rgba(169,112,31,0.78) 100%);
-  }
+  /* hero potato frame sequence — current frame swapped in JS, synced to scroll */
+  #patateFrame { opacity: 0; transition: opacity .3s ease; }
+  #patateFrame.is-ready { opacity: 1; }
 
   /* hero background photo — dimmed/desaturated so it stays ambience, not the focal point */
   .hero-bg-photo {
@@ -264,42 +255,21 @@
         </div>
       </div>
 
-      <!-- scroll-driven visual: the potato builds up — base, sauce, toppings, "prête" -->
+      <!-- scroll-driven visual: real photo sequence of the potato being garnished (60 frames) -->
       <div id="hero-visual-wrap" class="relative z-10 w-full flex-1 flex items-center justify-center px-6 pb-6">
-        <div class="relative w-56 h-56 sm:w-64 sm:h-64">
+        <div class="relative w-72 sm:w-[26rem]">
 
           <div id="readyBadge" class="absolute top-1 left-1/2 -translate-x-1/2 opacity-0 scale-75 inline-flex items-center gap-1.5 bg-terracotta text-ink font-space font-semibold text-xs px-3.5 py-1.5 rounded-full shadow-lg whitespace-nowrap z-20">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
             Formule prête
           </div>
 
-          <!-- lit de cressonnette -->
-          <div class="cressonnette absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-1.5 z-0 opacity-0">
-            <span class="w-1 h-6 rounded-full bg-sage/70 rotate-[-15deg]"></span>
-            <span class="w-1 h-7 rounded-full bg-sage/85 rotate-[-5deg]"></span>
-            <span class="w-1 h-8 rounded-full bg-sage rotate-[5deg]"></span>
-            <span class="w-1 h-7 rounded-full bg-sage/85 rotate-[12deg]"></span>
-            <span class="w-1 h-6 rounded-full bg-sage/70 rotate-[20deg]"></span>
+          <div id="frameLoader" class="absolute inset-0 flex items-center justify-center gap-1.5 text-cream/50 text-xs font-space tracking-[0.15em] uppercase">
+            <span class="w-1.5 h-1.5 rounded-full bg-cream/50 animate-pulse"></span>
+            Chargement
           </div>
 
-          <div class="absolute bottom-6 left-1/2 -translate-x-1/2 w-full h-14 rounded-[50%] bg-ink/20 blur-[2px] z-0"></div>
-
-          <div class="potato-body absolute bottom-12 left-1/2 -translate-x-1/2 w-[85%] h-[62%] shadow-xl -rotate-2 opacity-0 scale-90 z-10">
-            <div class="potato-cut absolute -top-3 left-1/2 -translate-x-1/2 w-[72%] h-[46%] shadow-inner overflow-hidden">
-              <div id="sauceFill" class="sauce-fill absolute inset-0 origin-top scale-y-0 opacity-0"></div>
-
-              <div class="topping-lardons absolute top-2 left-3 w-2.5 h-2 rounded-sm bg-brick/80 opacity-0 scale-0"></div>
-              <div class="topping-lardons absolute top-3 right-4 w-2 h-2 rounded-sm bg-brick/80 opacity-0 scale-0"></div>
-              <div class="topping-lardons absolute bottom-3 left-1/2 w-2.5 h-2 rounded-sm bg-brick/80 opacity-0 scale-0"></div>
-
-              <div class="topping-chive absolute bottom-2 left-4 w-5 h-1 rounded-full bg-sage opacity-0 scale-0 rotate-[20deg]"></div>
-              <div class="topping-chive absolute bottom-3 right-5 w-4 h-1 rounded-full bg-sage opacity-0 scale-0 -rotate-[15deg]"></div>
-              <div class="topping-chive absolute bottom-1 left-1/2 w-4 h-1 rounded-full bg-sage opacity-0 scale-0 rotate-[50deg]"></div>
-
-              <div class="topping-cheddar absolute top-4 left-1/2 w-6 h-1 rounded-full bg-gold opacity-0 scale-0 rotate-[8deg]"></div>
-              <div class="topping-cheddar absolute top-6 left-6 w-5 h-1 rounded-full bg-gold opacity-0 scale-0 -rotate-[10deg]"></div>
-            </div>
-          </div>
+          <img id="patateFrame" alt="" aria-hidden="true" class="relative w-full aspect-[1024/576] object-contain" />
         </div>
       </div>
 
@@ -653,57 +623,89 @@
     });
   });
 
-  // ---------- Hero: the potato builds up (base -> sauce -> toppings -> "prête") ----------
+  // ---------- Hero: real photo sequence of the potato being garnished, scroll-scrubbed ----------
   gsap.registerPlugin(ScrollTrigger);
 
   const isDesktop = window.innerWidth > 768;
 
-  if (isDesktop) {
-    // Pinned & scrubbed: pin:true + pinSpacing (default true) auto-reserves exactly the
-    // scroll distance declared in `end` — no manual section height needed.
-    const heroTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: '#hero',
-        start: 'top top',
-        end: '+=3000',
-        scrub: 0.4,
-        pin: '#heroPin',
-        pinSpacing: true,
-        anticipatePin: 1,
-      }
-    });
+  const FRAME_COUNT = 60;
+  const frameUrls = Array.from({ length: FRAME_COUNT }, (_, i) =>
+    `images/patate-frames/frame_${String(i + 1).padStart(3, '0')}.webp`
+  );
+  const patateFrameEl = document.getElementById('patateFrame');
+  const frameLoaderEl = document.getElementById('frameLoader');
+  const frameImages = [];
+  let framesLoaded = 0;
 
-    heroTl
-      .to('.potato-body', { opacity: 1, scale: 1, duration: 0.4, ease: 'power1.out' }, 0)
-      .to('.cressonnette', { opacity: 1, duration: 0.3, ease: 'power1.out' }, 0.1)
-      .to('#sauceFill', { scaleY: 1, opacity: 1, duration: 0.5, ease: 'power1.inOut' }, 0.6)
-      .to('.topping-lardons', { opacity: 1, scale: 1, stagger: 0.1, duration: 0.25, ease: 'back.out(2)' }, 1.15)
-      .to('.topping-chive', { opacity: 1, scale: 1, stagger: 0.1, duration: 0.25, ease: 'back.out(2)' }, 1.45)
-      .to('.topping-cheddar', { opacity: 1, scale: 1, stagger: 0.1, duration: 0.25, ease: 'back.out(2)' }, 1.75)
-      .to('#readyBadge', { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(2)' }, 2.1);
-  } else {
-    // Mobile: no pin (the address bar showing/hiding on scroll throws off ScrollTrigger's
-    // pinned-height math). Play the same build-up once, as a normal entrance, when the Hero
-    // scrolls into view.
-    const heroTlMobile = gsap.timeline({ paused: true });
-    heroTlMobile
-      .to('.potato-body', { opacity: 1, scale: 1, duration: 0.35, ease: 'power1.out' }, 0)
-      .to('.cressonnette', { opacity: 1, duration: 0.25, ease: 'power1.out' }, 0.05)
-      .to('#sauceFill', { scaleY: 1, opacity: 1, duration: 0.4, ease: 'power1.inOut' }, 0.35)
-      .to('.topping-lardons', { opacity: 1, scale: 1, stagger: 0.06, duration: 0.2, ease: 'back.out(2)' }, 0.75)
-      .to('.topping-chive', { opacity: 1, scale: 1, stagger: 0.06, duration: 0.2, ease: 'back.out(2)' }, 0.95)
-      .to('.topping-cheddar', { opacity: 1, scale: 1, stagger: 0.06, duration: 0.2, ease: 'back.out(2)' }, 1.15)
-      .to('#readyBadge', { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(2)' }, 1.45);
-
-    // Hero is the first section, so it's often already inside the trigger zone at page
-    // load (no scroll needed) — ScrollTrigger's onEnter only fires on a crossing, not on an
-    // already-active initial state, so we explicitly check the real DOM position too.
-    let heroPlayed = false;
-    function playHeroOnce() { if (!heroPlayed) { heroPlayed = true; heroTlMobile.play(); } }
-    ScrollTrigger.create({ trigger: '#hero', start: 'top 70%', pin: false, onEnter: playHeroOnce });
-    const heroTopNow = document.getElementById('hero').getBoundingClientRect().top;
-    if (heroTopNow < window.innerHeight * 0.7) playHeroOnce();
+  function setFrame(index) {
+    const clamped = Math.max(0, Math.min(FRAME_COUNT - 1, Math.round(index)));
+    patateFrameEl.src = frameUrls[clamped];
   }
+
+  function initHeroSequence() {
+    setFrame(0);
+    patateFrameEl.classList.add('is-ready');
+    frameLoaderEl.style.display = 'none';
+
+    if (isDesktop) {
+      // Pinned & scrubbed: pin:true + pinSpacing (default true) auto-reserves exactly the
+      // scroll distance declared in `end` — no manual section height needed.
+      const heroTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '#hero',
+          start: 'top top',
+          end: '+=3000',
+          scrub: 0.4,
+          pin: '#heroPin',
+          pinSpacing: true,
+          anticipatePin: 1,
+        }
+      });
+
+      const frameState = { frame: 0 };
+      heroTl
+        .to(frameState, {
+          frame: FRAME_COUNT - 1,
+          duration: 2,
+          ease: 'none',
+          onUpdate: () => setFrame(frameState.frame),
+        }, 0)
+        .to('#readyBadge', { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(2)' }, 1.7);
+    } else {
+      // Mobile: no pin (the address bar showing/hiding on scroll throws off ScrollTrigger's
+      // pinned-height math). Play the sequence once, like a little GIF, when the Hero scrolls
+      // into view — not scrubbed continuously.
+      const frameState = { frame: 0 };
+      const heroTlMobile = gsap.timeline({ paused: true });
+      heroTlMobile
+        .to(frameState, {
+          frame: FRAME_COUNT - 1,
+          duration: 1.4,
+          ease: 'none',
+          onUpdate: () => setFrame(frameState.frame),
+        }, 0)
+        .to('#readyBadge', { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(2)' }, 1.1);
+
+      // Hero is the first section, so it's often already inside the trigger zone at page
+      // load (no scroll needed) — ScrollTrigger's onEnter only fires on a crossing, not on an
+      // already-active initial state, so we explicitly check the real DOM position too.
+      let heroPlayed = false;
+      function playHeroOnce() { if (!heroPlayed) { heroPlayed = true; heroTlMobile.play(); } }
+      ScrollTrigger.create({ trigger: '#hero', start: 'top 70%', pin: false, onEnter: playHeroOnce });
+      const heroTopNow = document.getElementById('hero').getBoundingClientRect().top;
+      if (heroTopNow < window.innerHeight * 0.7) playHeroOnce();
+    }
+  }
+
+  frameUrls.forEach((url) => {
+    const img = new Image();
+    img.onload = img.onerror = () => {
+      framesLoaded++;
+      if (framesLoaded === FRAME_COUNT) initHeroSequence();
+    };
+    img.src = url;
+    frameImages.push(img);
+  });
 
   // ---------- Reveal-on-scroll for all other sections/cards (simple fade-up,
   // no pinning/scroll-jacking, keeps the food-truck feel light and unfussy) ----------
