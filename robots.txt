@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://REMPLACER-PAR-URL-CHAUD-PATATE.pages.dev/sitemap.xml
+Sitemap: https://chaud-patate.guillaumedh07.workers.dev/sitemap.xml
