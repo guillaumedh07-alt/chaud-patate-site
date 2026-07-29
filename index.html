@@ -164,6 +164,11 @@
   .hero-bg-photo {
     filter: brightness(0.42) saturate(0.6);
   }
+
+  /* language switcher */
+  .lang-btn { opacity: 0.45; transition: opacity .2s ease; }
+  .lang-btn.is-active { opacity: 1; }
+  .lang-btn:hover { opacity: 0.8; }
 </style>
 </head>
 <body class="bg-cream text-ink antialiased overflow-x-hidden">
@@ -173,10 +178,11 @@
 
 <!-- ============ WHATSAPP FLOATING BUTTON ============ -->
 <a href="https://wa.me/32456115424" target="_blank" rel="noopener noreferrer"
+   data-i18n-aria-label="whatsapp.aria"
    aria-label="Écrivez-nous sur WhatsApp"
    class="group fixed bottom-6 right-6 z-[999] w-14 h-14 rounded-full bg-terracotta text-ink flex items-center justify-center shadow-[0_4px_24px_rgba(200,103,46,0.45)] hover:scale-110 hover:shadow-[0_4px_32px_rgba(200,103,46,0.6)] transition-all duration-300">
   <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.38a9.87 9.87 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm5.8 14.09c-.24.68-1.4 1.32-1.93 1.38-.5.06-1.03.29-3.45-.72-2.9-1.2-4.75-4.15-4.9-4.34-.14-.2-1.17-1.56-1.17-2.98 0-1.41.74-2.1 1-2.4.26-.28.57-.35.76-.35.19 0 .38 0 .55.01.18.01.42-.07.65.5.24.58.81 2 .88 2.15.07.14.12.32.02.51-.1.2-.15.32-.29.49-.15.17-.3.38-.44.51-.14.14-.3.29-.13.57.17.29.76 1.25 1.63 2.02 1.12 1 2.06 1.31 2.35 1.46.29.14.46.12.63-.07.17-.2.72-.84.92-1.13.19-.28.38-.24.63-.14.26.1 1.65.78 1.93.92.29.14.48.21.55.33.07.12.07.68-.17 1.36Z"/></svg>
-  <span class="pointer-events-none absolute right-full mr-3 top-1/2 -translate-y-1/2 whitespace-nowrap bg-ink text-cream border border-ink/10 text-xs px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hidden sm:block">
+  <span data-i18n="whatsapp.tooltip" class="pointer-events-none absolute right-full mr-3 top-1/2 -translate-y-1/2 whitespace-nowrap bg-ink text-cream border border-ink/10 text-xs px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hidden sm:block">
     Écrivez-nous sur WhatsApp
   </span>
 </a>
@@ -194,13 +200,22 @@
           <span class="absolute inline-flex w-full h-full rounded-full bg-sage opacity-75 animate-ping"></span>
           <span class="relative inline-flex w-1.5 h-1.5 rounded-full bg-sage"></span>
         </span>
-        Dispo pour vos événements 2026
+        <span data-i18n="header.badge">Dispo pour vos événements 2026</span>
       </span>
     </div>
-    <a href="#contact" data-scroll
-       class="hidden sm:inline-flex items-center gap-2 text-xs font-medium px-4 py-2 rounded-full glass hover:border-terracotta/50 hover:text-terracotta transition-colors">
-      Réserver le truck
-    </a>
+    <div class="flex items-center gap-4 sm:gap-5">
+      <nav id="langSwitcher" class="flex items-center gap-2.5 text-[11px] font-space font-semibold tracking-wide text-ink/70" aria-label="Langue / Language / Taal">
+        <button type="button" data-lang="fr" class="lang-btn">FR</button>
+        <span class="text-ink/20">/</span>
+        <button type="button" data-lang="en" class="lang-btn">EN</button>
+        <span class="text-ink/20">/</span>
+        <button type="button" data-lang="nl" class="lang-btn">NL</button>
+      </nav>
+      <a href="#contact" data-scroll data-i18n="header.cta"
+         class="hidden sm:inline-flex items-center gap-2 text-xs font-medium px-4 py-2 rounded-full glass hover:border-terracotta/50 hover:text-terracotta transition-colors">
+        Réserver le truck
+      </a>
+    </div>
   </div>
 </header>
 
@@ -226,13 +241,13 @@
 
       <!-- fixed text, always readable -->
       <div class="relative z-20 max-w-4xl mx-auto px-6 pt-28 md:pt-32 text-center">
-        <p class="font-space text-xs md:text-sm tracking-[0.25em] uppercase text-terracotta mb-5">
+        <p data-i18n="hero.label" class="font-space text-xs md:text-sm tracking-[0.25em] uppercase text-terracotta mb-5">
           Food truck &amp; traiteur artisanal · Bierges
         </p>
-        <h1 class="font-space text-4xl sm:text-5xl md:text-6xl font-semibold leading-[1.08] text-gradient">
+        <h1 data-i18n-html="hero.title" class="font-space text-4xl sm:text-5xl md:text-6xl font-semibold leading-[1.08] text-gradient">
           Des patates fourrées<br class="hidden sm:block"> qui régalent vos événements
         </h1>
-        <p class="mt-5 text-base md:text-lg text-cream/80 max-w-xl mx-auto">
+        <p data-i18n="hero.subtitle" class="mt-5 text-base md:text-lg text-cream/80 max-w-xl mx-auto">
           Une patate fondante, une sauce généreuse, des toppings qui claquent — préparée sur place
           pour vos mariages, entreprises, festivals et fêtes privées.
         </p>
@@ -240,18 +255,18 @@
           <span id="heroTypewriter"></span><span class="blink-caret inline-block w-[2px] h-[1em] bg-terracotta align-middle ml-0.5"></span>
         </p>
         <div class="mt-4 flex items-center justify-center">
-          <span class="inline-flex items-center gap-1.5 text-[11px] font-medium text-gold bg-ink/30 backdrop-blur-sm border border-gold/40 px-3 py-1.5 rounded-full">
+          <span data-i18n="hero.badge" class="inline-flex items-center gap-1.5 text-[11px] font-medium text-gold bg-ink/30 backdrop-blur-sm border border-gold/40 px-3 py-1.5 rounded-full">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c4.5 0 7-3 7-6.5 0-2-.8-3.7-2-5 .3 1.5-.5 2.5-1.5 2.5.6-2.5-1-5-3.5-7 .5 2-.5 3.5-2 5-1.7 1.7-3 3.3-3 5.5C7 19 8.5 22 12 22Z"/></svg>
             Devis gratuit sous 24h
           </span>
         </div>
         <div class="mt-5 flex flex-col items-center gap-3">
-          <a href="#contact" data-scroll
+          <a href="#contact" data-scroll data-i18n="hero.cta"
              class="inline-flex items-center gap-2 bg-terracotta text-ink font-space font-semibold text-sm px-7 py-3.5 rounded-full hover:shadow-[0_0_30px_rgba(200,103,46,0.45)] hover:-translate-y-0.5 transition-all">
             Réserver le food truck
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
-          <p class="text-xs text-cream/50">Sans engagement, on vous répond vite</p>
+          <p data-i18n="hero.reassurance" class="text-xs text-cream/50">Sans engagement, on vous répond vite</p>
         </div>
       </div>
 
@@ -261,12 +276,12 @@
 
           <div id="readyBadge" class="absolute top-1 left-1/2 -translate-x-1/2 opacity-0 scale-75 inline-flex items-center gap-1.5 bg-terracotta text-ink font-space font-semibold text-xs px-3.5 py-1.5 rounded-full shadow-lg whitespace-nowrap z-20">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
-            Formule prête
+            <span data-i18n="hero.readyBadge">Formule prête</span>
           </div>
 
           <div id="frameLoader" class="absolute inset-0 flex items-center justify-center gap-1.5 text-cream/50 text-xs font-space tracking-[0.15em] uppercase">
             <span class="w-1.5 h-1.5 rounded-full bg-cream/50 animate-pulse"></span>
-            Chargement
+            <span data-i18n="hero.loading">Chargement</span>
           </div>
 
           <img id="patateFrame" alt="" aria-hidden="true" class="relative w-full aspect-[1024/576] object-contain" />
@@ -274,7 +289,7 @@
       </div>
 
       <div class="relative z-20 pb-8 flex flex-col items-center gap-2 text-cream/40">
-        <span class="text-[10px] tracking-[0.2em] uppercase">Scroll</span>
+        <span data-i18n="hero.scroll" class="text-[10px] tracking-[0.2em] uppercase">Scroll</span>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
       </div>
     </div>
@@ -283,11 +298,11 @@
   <!-- ============ CONCEPT ============ -->
   <div class="relative z-30 bg-cream border-b border-ink/10 py-6 px-6">
     <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-x-10 gap-y-3">
-      <span class="text-[11px] tracking-[0.2em] uppercase text-ink/40 mr-2">Parfait pour</span>
-      <span class="font-space text-sm text-ink/60 hover:text-terracotta transition-colors">Mariages</span>
-      <span class="font-space text-sm text-ink/60 hover:text-terracotta transition-colors">Entreprises</span>
-      <span class="font-space text-sm text-ink/60 hover:text-terracotta transition-colors">Festivals</span>
-      <span class="font-space text-sm text-ink/60 hover:text-terracotta transition-colors">Anniversaires</span>
+      <span data-i18n="concept.label" class="text-[11px] tracking-[0.2em] uppercase text-ink/40 mr-2">Parfait pour</span>
+      <span data-i18n="concept.weddings" class="font-space text-sm text-ink/60 hover:text-terracotta transition-colors">Mariages</span>
+      <span data-i18n="concept.companies" class="font-space text-sm text-ink/60 hover:text-terracotta transition-colors">Entreprises</span>
+      <span data-i18n="concept.festivals" class="font-space text-sm text-ink/60 hover:text-terracotta transition-colors">Festivals</span>
+      <span data-i18n="concept.birthdays" class="font-space text-sm text-ink/60 hover:text-terracotta transition-colors">Anniversaires</span>
     </div>
   </div>
 
@@ -295,9 +310,9 @@
   <section id="menu" class="texture-paper relative z-30 bg-cream py-28 md:py-36 px-6">
     <div class="max-w-6xl mx-auto">
       <div class="reveal max-w-xl mb-16">
-        <p class="font-space text-xs tracking-[0.25em] uppercase text-terracotta/90 mb-4">La formule</p>
-        <h2 class="font-space text-3xl md:text-4xl font-semibold">Composez votre patate fourrée</h2>
-        <p class="mt-3 text-sm text-ink/50">Notre spécialité : la jacked potato — une base, une sauce au choix, des toppings gourmands. Simple et diablement efficace.</p>
+        <p data-i18n="menu.label" class="font-space text-xs tracking-[0.25em] uppercase text-terracotta/90 mb-4">La formule</p>
+        <h2 data-i18n="menu.title" class="font-space text-3xl md:text-4xl font-semibold">Composez votre patate fourrée</h2>
+        <p data-i18n="menu.subtitle" class="mt-3 text-sm text-ink/50">Notre spécialité : la jacked potato — une base, une sauce au choix, des toppings gourmands. Simple et diablement efficace.</p>
       </div>
 
       <div class="flex flex-col md:flex-row items-stretch gap-4 md:gap-3">
@@ -306,8 +321,8 @@
           <div class="w-11 h-11 rounded-xl bg-terracotta/10 flex items-center justify-center mb-6 text-terracotta">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 4c3 0 6 2 7 5 1 2.5.5 5-1 7-1.5 2-4 3-6.5 2.5-2.5-.5-4.5-2-5-4.5C6 12 5.5 9.5 7 7c1-2 2.5-3 5-3Z"/></svg>
           </div>
-          <h3 class="font-space font-semibold text-base mb-2">La base</h3>
-          <p class="text-sm text-ink/60 leading-relaxed">Une patate cuite au four, moelleuse à souhait, servie sur un lit de cressonette fraîche.</p>
+          <h3 data-i18n="menu.base.title" class="font-space font-semibold text-base mb-2">La base</h3>
+          <p data-i18n="menu.base.desc" class="text-sm text-ink/60 leading-relaxed">Une patate cuite au four, moelleuse à souhait, servie sur un lit de cressonette fraîche.</p>
         </div>
 
         <div class="hidden md:flex items-center justify-center text-terracotta/50 font-space text-2xl">+</div>
@@ -317,8 +332,8 @@
           <div class="w-11 h-11 rounded-xl bg-terracotta/10 flex items-center justify-center mb-6 text-terracotta">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 19L11 4l10 15H3Z"/><circle cx="11" cy="14" r=".6" fill="currentColor" stroke="none"/><circle cx="15" cy="11.5" r=".5" fill="currentColor" stroke="none"/><circle cx="8" cy="16" r=".5" fill="currentColor" stroke="none"/></svg>
           </div>
-          <h3 class="font-space font-semibold text-base mb-2">Votre sauce</h3>
-          <p class="text-sm text-ink/60 leading-relaxed">Au choix : fromagère onctueuse ou chili con carne bien relevé.</p>
+          <h3 data-i18n="menu.sauce.title" class="font-space font-semibold text-base mb-2">Votre sauce</h3>
+          <p data-i18n="menu.sauce.desc" class="text-sm text-ink/60 leading-relaxed">Au choix : fromagère onctueuse ou chili con carne bien relevé.</p>
         </div>
 
         <div class="hidden md:flex items-center justify-center text-terracotta/50 font-space text-2xl">+</div>
@@ -328,17 +343,17 @@
           <div class="w-11 h-11 rounded-xl bg-terracotta/10 flex items-center justify-center mb-6 text-terracotta">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 20V10M12 10c0-3-2-6-4-7M12 10c0-3 2-6 4-7M8 15c-1.5 0-3-1-3.5-3M16 15c1.5 0 3-1 3.5-3"/></svg>
           </div>
-          <h3 class="font-space font-semibold text-base mb-2">Les toppings</h3>
-          <p class="text-sm text-ink/60 leading-relaxed">Lardons fumés, ciboulette fraîche et cheddar râpé, généreusement.</p>
+          <h3 data-i18n="menu.toppings.title" class="font-space font-semibold text-base mb-2">Les toppings</h3>
+          <p data-i18n="menu.toppings.desc" class="text-sm text-ink/60 leading-relaxed">Lardons fumés, ciboulette fraîche et cheddar râpé, généreusement.</p>
         </div>
 
       </div>
 
       <div class="reveal mt-8 glass rounded-2xl p-6 sm:p-7 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p class="text-sm text-ink/70 text-center sm:text-left">
+        <p data-i18n-html="menu.quote" class="text-sm text-ink/70 text-center sm:text-left">
           <span class="text-gold font-space font-semibold">Sur devis</span> — selon le nombre de convives et la formule choisie pour votre événement.
         </p>
-        <a href="#contact" data-scroll
+        <a href="#contact" data-scroll data-i18n="menu.quoteCta"
            class="shrink-0 inline-flex items-center gap-2 bg-terracotta text-ink font-space font-semibold text-sm px-6 py-3 rounded-full hover:shadow-[0_0_30px_rgba(200,103,46,0.45)] transition-all">
           Demander un devis
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -351,8 +366,8 @@
   <section id="services" class="relative py-28 md:py-36 px-6 bg-cream2/50">
     <div class="max-w-6xl mx-auto">
       <div class="reveal max-w-xl mb-16">
-        <p class="font-space text-xs tracking-[0.25em] uppercase text-terracotta/90 mb-4">Traiteur &amp; événements</p>
-        <h2 class="font-space text-3xl md:text-4xl font-semibold">On s'installe où vous voulez</h2>
+        <p data-i18n="services.label" class="font-space text-xs tracking-[0.25em] uppercase text-terracotta/90 mb-4">Traiteur &amp; événements</p>
+        <h2 data-i18n="services.title" class="font-space text-3xl md:text-4xl font-semibold">On s'installe où vous voulez</h2>
       </div>
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -361,32 +376,32 @@
           <div class="w-11 h-11 rounded-xl bg-terracotta/10 flex items-center justify-center mb-6 text-terracotta">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="13" r="5"/><circle cx="15" cy="13" r="5"/></svg>
           </div>
-          <h3 class="font-space font-semibold text-base mb-2">Mariages</h3>
-          <p class="text-sm text-ink/60 leading-relaxed">Un food truck qui régale vos invités et fait parler d'eux longtemps après le dernier service.</p>
+          <h3 data-i18n="services.weddings.title" class="font-space font-semibold text-base mb-2">Mariages</h3>
+          <p data-i18n="services.weddings.desc" class="text-sm text-ink/60 leading-relaxed">Un food truck qui régale vos invités et fait parler d'eux longtemps après le dernier service.</p>
         </div>
 
         <div class="reveal group glass rounded-2xl p-7 hover:border-terracotta/40 hover:-translate-y-1 transition-all duration-300">
           <div class="w-11 h-11 rounded-xl bg-terracotta/10 flex items-center justify-center mb-6 text-terracotta">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 8h1M9 12h1M9 16h1M14 8h1M14 12h1M14 16h1"/></svg>
           </div>
-          <h3 class="font-space font-semibold text-base mb-2">Entreprises</h3>
-          <p class="text-sm text-ink/60 leading-relaxed">Séminaires, lancements produit : une pause gourmande qui change des sandwichs plateau-repas.</p>
+          <h3 data-i18n="services.companies.title" class="font-space font-semibold text-base mb-2">Entreprises</h3>
+          <p data-i18n="services.companies.desc" class="text-sm text-ink/60 leading-relaxed">Séminaires, lancements produit : une pause gourmande qui change des sandwichs plateau-repas.</p>
         </div>
 
         <div class="reveal group glass rounded-2xl p-7 hover:border-terracotta/40 hover:-translate-y-1 transition-all duration-300">
           <div class="w-11 h-11 rounded-xl bg-terracotta/10 flex items-center justify-center mb-6 text-terracotta">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12 12 4l9 8"/><path d="M5 12v8h14v-8"/><path d="M12 4v16"/></svg>
           </div>
-          <h3 class="font-space font-semibold text-base mb-2">Festivals &amp; marchés</h3>
-          <p class="text-sm text-ink/60 leading-relaxed">Sur vos événements publics, un service rapide qui tient la cadence même aux heures de rush.</p>
+          <h3 data-i18n="services.festivals.title" class="font-space font-semibold text-base mb-2">Festivals &amp; marchés</h3>
+          <p data-i18n="services.festivals.desc" class="text-sm text-ink/60 leading-relaxed">Sur vos événements publics, un service rapide qui tient la cadence même aux heures de rush.</p>
         </div>
 
         <div class="reveal group glass rounded-2xl p-7 hover:border-terracotta/40 hover:-translate-y-1 transition-all duration-300">
           <div class="w-11 h-11 rounded-xl bg-terracotta/10 flex items-center justify-center mb-6 text-terracotta">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="9" width="18" height="4" rx="1"/><rect x="5" y="13" width="14" height="8" rx="1"/><path d="M12 9v12M12 9c-1.5-3-5-3-5-1s2 1 5 1M12 9c1.5-3 5-3 5-1s-2 1-5 1"/></svg>
           </div>
-          <h3 class="font-space font-semibold text-base mb-2">Fêtes privées</h3>
-          <p class="text-sm text-ink/60 leading-relaxed">Anniversaires, rallyes, fêtes de famille : une animation gourmande qui régale petits et grands groupes.</p>
+          <h3 data-i18n="services.private.title" class="font-space font-semibold text-base mb-2">Fêtes privées</h3>
+          <p data-i18n="services.private.desc" class="text-sm text-ink/60 leading-relaxed">Anniversaires, rallyes, fêtes de famille : une animation gourmande qui régale petits et grands groupes.</p>
         </div>
 
       </div>
@@ -397,8 +412,8 @@
   <section id="process" class="relative py-28 md:py-36 px-6">
     <div class="max-w-6xl mx-auto">
       <div class="reveal max-w-xl mb-20">
-        <p class="font-space text-xs tracking-[0.25em] uppercase text-terracotta/90 mb-4">Process</p>
-        <h2 class="font-space text-3xl md:text-4xl font-semibold">Comment ça se passe</h2>
+        <p data-i18n="process.label" class="font-space text-xs tracking-[0.25em] uppercase text-terracotta/90 mb-4">Process</p>
+        <h2 data-i18n="process.title" class="font-space text-3xl md:text-4xl font-semibold">Comment ça se passe</h2>
       </div>
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-0 relative">
@@ -408,32 +423,32 @@
           <div class="w-12 h-12 rounded-full bg-cream border border-terracotta/40 text-terracotta flex items-center justify-center mb-6 relative z-10">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           </div>
-          <h3 class="font-space font-semibold mb-2">01 · Contact</h3>
-          <p class="text-sm text-ink/55 leading-relaxed">Date, lieu, nombre d'invités — racontez-nous votre événement.</p>
+          <h3 data-i18n="process.step1.title" class="font-space font-semibold mb-2">01 · Contact</h3>
+          <p data-i18n="process.step1.desc" class="text-sm text-ink/55 leading-relaxed">Date, lieu, nombre d'invités — racontez-nous votre événement.</p>
         </div>
 
         <div class="reveal relative lg:px-6">
           <div class="w-12 h-12 rounded-full bg-cream border border-terracotta/40 text-terracotta flex items-center justify-center mb-6 relative z-10">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
           </div>
-          <h3 class="font-space font-semibold mb-2">02 · Devis</h3>
-          <p class="text-sm text-ink/55 leading-relaxed">Un menu et un devis sur mesure, sous 24h.</p>
+          <h3 data-i18n="process.step2.title" class="font-space font-semibold mb-2">02 · Devis</h3>
+          <p data-i18n="process.step2.desc" class="text-sm text-ink/55 leading-relaxed">Un menu et un devis sur mesure, sous 24h.</p>
         </div>
 
         <div class="reveal relative lg:px-6">
           <div class="w-12 h-12 rounded-full bg-cream border border-terracotta/40 text-terracotta flex items-center justify-center mb-6 relative z-10">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h10v9H3z"/><path d="M13 10h4l3 3v3h-7v-6z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>
           </div>
-          <h3 class="font-space font-semibold mb-2">03 · Jour J</h3>
-          <p class="text-sm text-ink/55 leading-relaxed">On arrive, on installe, on cuisine sur place, devant vos invités.</p>
+          <h3 data-i18n="process.step3.title" class="font-space font-semibold mb-2">03 · Jour J</h3>
+          <p data-i18n="process.step3.desc" class="text-sm text-ink/55 leading-relaxed">On arrive, on installe, on cuisine sur place, devant vos invités.</p>
         </div>
 
         <div class="reveal relative lg:px-6">
           <div class="w-12 h-12 rounded-full bg-cream border border-terracotta/40 text-terracotta flex items-center justify-center mb-6 relative z-10">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 2v7a2 2 0 0 0 4 0V2M8 9v13M16 2c0 3-1.5 5-2 7 0 1 .5 2 2 2v11"/></svg>
           </div>
-          <h3 class="font-space font-semibold mb-2">04 · Régal</h3>
-          <p class="text-sm text-ink/55 leading-relaxed">Vos invités se régalent, vous profitez de la fête sans vous soucier de rien.</p>
+          <h3 data-i18n="process.step4.title" class="font-space font-semibold mb-2">04 · Régal</h3>
+          <p data-i18n="process.step4.desc" class="text-sm text-ink/55 leading-relaxed">Vos invités se régalent, vous profitez de la fête sans vous soucier de rien.</p>
         </div>
       </div>
     </div>
@@ -443,9 +458,9 @@
   <section id="contact" class="relative py-28 md:py-36 px-6 bg-cream2/50">
     <div class="max-w-5xl mx-auto">
       <div class="reveal max-w-xl mb-16">
-        <p class="font-space text-xs tracking-[0.25em] uppercase text-terracotta/90 mb-4">Contact</p>
-        <h2 class="font-space text-3xl md:text-4xl font-semibold">Réservons votre événement</h2>
-        <p class="mt-4 text-ink/60">Décrivez votre événement, on revient vers vous rapidement avec un devis.</p>
+        <p data-i18n="contact.label" class="font-space text-xs tracking-[0.25em] uppercase text-terracotta/90 mb-4">Contact</p>
+        <h2 data-i18n="contact.title" class="font-space text-3xl md:text-4xl font-semibold">Réservons votre événement</h2>
+        <p data-i18n="contact.subtitle" class="mt-4 text-ink/60">Décrivez votre événement, on revient vers vous rapidement avec un devis.</p>
       </div>
 
       <div class="grid lg:grid-cols-5 gap-10 lg:gap-16">
@@ -457,7 +472,7 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             </div>
             <div>
-              <p class="text-xs text-ink/45 mb-0.5">Téléphone</p>
+              <p data-i18n="contact.phone" class="text-xs text-ink/45 mb-0.5">Téléphone</p>
               <p class="font-space text-sm font-medium group-hover:text-terracotta transition-colors">+32 456 115 424</p>
             </div>
           </a>
@@ -467,7 +482,7 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
             </div>
             <div>
-              <p class="text-xs text-ink/45 mb-0.5">Email</p>
+              <p data-i18n="contact.email" class="text-xs text-ink/45 mb-0.5">Email</p>
               <p class="font-space text-sm font-medium group-hover:text-terracotta transition-colors break-all">guillaumedh07@gmail.com</p>
             </div>
           </a>
@@ -477,7 +492,7 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
             </div>
             <div>
-              <p class="text-xs text-ink/45 mb-0.5">Instagram</p>
+              <p data-i18n="contact.instagram" class="text-xs text-ink/45 mb-0.5">Instagram</p>
               <p class="font-space text-sm font-medium group-hover:text-terracotta transition-colors">@chaudpatate1310</p>
             </div>
           </a>
@@ -487,8 +502,8 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
             </div>
             <div>
-              <p class="text-xs text-ink/45 mb-0.5">Basé à</p>
-              <p class="font-space text-sm font-medium">Bierges — on se déplace pour vos événements</p>
+              <p data-i18n="contact.based" class="text-xs text-ink/45 mb-0.5">Basé à</p>
+              <p data-i18n="contact.basedValue" class="font-space text-sm font-medium">Bierges — on se déplace pour vos événements</p>
             </div>
           </div>
         </div>
@@ -503,37 +518,37 @@
 
           <div class="grid sm:grid-cols-2 gap-4">
             <div>
-              <label class="text-xs text-ink/45 mb-1.5 block">Nom</label>
-              <input required type="text" name="name" placeholder="Votre nom"
+              <label data-i18n="form.name" class="text-xs text-ink/45 mb-1.5 block">Nom</label>
+              <input required type="text" name="name" data-i18n-placeholder="form.namePh" placeholder="Votre nom"
                      class="w-full bg-white/60 border border-ink/15 rounded-lg px-4 py-3 text-sm outline-none focus:border-terracotta/60 transition-colors placeholder:text-ink/30">
             </div>
             <div>
-              <label class="text-xs text-ink/45 mb-1.5 block">Email</label>
+              <label data-i18n="form.email" class="text-xs text-ink/45 mb-1.5 block">Email</label>
               <input required type="email" name="email" placeholder="vous@exemple.com"
                      class="w-full bg-white/60 border border-ink/15 rounded-lg px-4 py-3 text-sm outline-none focus:border-terracotta/60 transition-colors placeholder:text-ink/30">
             </div>
           </div>
           <div class="grid sm:grid-cols-2 gap-4">
             <div>
-              <label class="text-xs text-ink/45 mb-1.5 block">Date de l'événement</label>
+              <label data-i18n="form.date" class="text-xs text-ink/45 mb-1.5 block">Date de l'événement</label>
               <input type="date" name="event_date"
                      class="w-full bg-white/60 border border-ink/15 rounded-lg px-4 py-3 text-sm outline-none focus:border-terracotta/60 transition-colors [color-scheme:light]">
             </div>
             <div>
-              <label class="text-xs text-ink/45 mb-1.5 block">Nombre d'invités</label>
-              <input type="number" name="guests" min="1" placeholder="ex. 80"
+              <label data-i18n="form.guests" class="text-xs text-ink/45 mb-1.5 block">Nombre d'invités</label>
+              <input type="number" name="guests" min="1" data-i18n-placeholder="form.guestsPh" placeholder="ex. 80"
                      class="w-full bg-white/60 border border-ink/15 rounded-lg px-4 py-3 text-sm outline-none focus:border-terracotta/60 transition-colors placeholder:text-ink/30">
             </div>
           </div>
           <div>
-            <label class="text-xs text-ink/45 mb-1.5 block">Message</label>
-            <textarea required name="message" rows="4" placeholder="Type d'événement, lieu, envies particulières..."
+            <label data-i18n="form.message" class="text-xs text-ink/45 mb-1.5 block">Message</label>
+            <textarea required name="message" rows="4" data-i18n-placeholder="form.messagePh" placeholder="Type d'événement, lieu, envies particulières..."
                       class="w-full bg-white/60 border border-ink/15 rounded-lg px-4 py-3 text-sm outline-none focus:border-terracotta/60 transition-colors placeholder:text-ink/30 resize-none"></textarea>
           </div>
 
           <button type="submit"
                   class="mt-2 inline-flex items-center justify-center gap-2 bg-terracotta text-ink font-space font-semibold text-sm px-6 py-3.5 rounded-full hover:shadow-[0_0_30px_rgba(200,103,46,0.45)] transition-all">
-            <span id="formBtnLabel">Envoyer la demande</span>
+            <span id="formBtnLabel" data-i18n="form.submit">Envoyer la demande</span>
           </button>
 
           <p id="formStatus" class="text-xs mt-1 hidden"></p>
@@ -549,10 +564,11 @@
 <footer class="relative z-10 px-6 py-10 border-t border-ink/10">
   <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-ink/45">
     <p>&copy; <span id="year"></span> Chaud Patate</p>
-    <a href="#top" data-scroll class="link-underline hover:text-ink/70 transition-colors">Retour en haut ↑</a>
+    <a href="#top" data-scroll data-i18n="footer.top" class="link-underline hover:text-ink/70 transition-colors">Retour en haut ↑</a>
   </div>
   <div class="max-w-6xl mx-auto mt-4 text-center sm:text-left">
     <a href="https://webdesign.guillaumedh07.workers.dev" target="_blank" rel="noopener noreferrer"
+       data-i18n="footer.credit"
        class="text-[11px] text-ink/35 hover:text-ink/60 transition-colors">
       Site créé par Guillaume de Hollain
     </a>
@@ -560,6 +576,269 @@
 </footer>
 
 <script>
+  // ---------- i18n ----------
+  const translations = {
+    fr: {
+      'whatsapp.aria': 'Écrivez-nous sur WhatsApp',
+      'whatsapp.tooltip': 'Écrivez-nous sur WhatsApp',
+      'header.badge': 'Dispo pour vos événements 2026',
+      'header.cta': 'Réserver le truck',
+      'hero.label': 'Food truck & traiteur artisanal · Bierges',
+      'hero.title': 'Des patates fourrées<br class="hidden sm:block"> qui régalent vos événements',
+      'hero.subtitle': 'Une patate fondante, une sauce généreuse, des toppings qui claquent — préparée sur place pour vos mariages, entreprises, festivals et fêtes privées.',
+      'hero.badge': 'Devis gratuit sous 24h',
+      'hero.cta': 'Réserver le food truck',
+      'hero.reassurance': 'Sans engagement, on vous répond vite',
+      'hero.readyBadge': 'Formule prête',
+      'hero.loading': 'Chargement',
+      'hero.scroll': 'Scroll',
+      'hero.typewriter': ['Mariages.', 'Événements d’entreprise.', 'Festivals.', 'Anniversaires.'],
+      'concept.label': 'Parfait pour',
+      'concept.weddings': 'Mariages',
+      'concept.companies': 'Entreprises',
+      'concept.festivals': 'Festivals',
+      'concept.birthdays': 'Anniversaires',
+      'menu.label': 'La formule',
+      'menu.title': 'Composez votre patate fourrée',
+      'menu.subtitle': 'Notre spécialité : la jacked potato — une base, une sauce au choix, des toppings gourmands. Simple et diablement efficace.',
+      'menu.base.title': 'La base',
+      'menu.base.desc': 'Une patate cuite au four, moelleuse à souhait, servie sur un lit de cressonette fraîche.',
+      'menu.sauce.title': 'Votre sauce',
+      'menu.sauce.desc': 'Au choix : fromagère onctueuse ou chili con carne bien relevé.',
+      'menu.toppings.title': 'Les toppings',
+      'menu.toppings.desc': 'Lardons fumés, ciboulette fraîche et cheddar râpé, généreusement.',
+      'menu.quote': '<span class="text-gold font-space font-semibold">Sur devis</span> — selon le nombre de convives et la formule choisie pour votre événement.',
+      'menu.quoteCta': 'Demander un devis',
+      'services.label': 'Traiteur & événements',
+      'services.title': "On s'installe où vous voulez",
+      'services.weddings.title': 'Mariages',
+      'services.weddings.desc': "Un food truck qui régale vos invités et fait parler d'eux longtemps après le dernier service.",
+      'services.companies.title': 'Entreprises',
+      'services.companies.desc': 'Séminaires, lancements produit : une pause gourmande qui change des sandwichs plateau-repas.',
+      'services.festivals.title': 'Festivals & marchés',
+      'services.festivals.desc': 'Sur vos événements publics, un service rapide qui tient la cadence même aux heures de rush.',
+      'services.private.title': 'Fêtes privées',
+      'services.private.desc': 'Anniversaires, rallyes, fêtes de famille : une animation gourmande qui régale petits et grands groupes.',
+      'process.label': 'Process',
+      'process.title': 'Comment ça se passe',
+      'process.step1.title': '01 · Contact',
+      'process.step1.desc': "Date, lieu, nombre d'invités — racontez-nous votre événement.",
+      'process.step2.title': '02 · Devis',
+      'process.step2.desc': 'Un menu et un devis sur mesure, sous 24h.',
+      'process.step3.title': '03 · Jour J',
+      'process.step3.desc': 'On arrive, on installe, on cuisine sur place, devant vos invités.',
+      'process.step4.title': '04 · Régal',
+      'process.step4.desc': 'Vos invités se régalent, vous profitez de la fête sans vous soucier de rien.',
+      'contact.label': 'Contact',
+      'contact.title': 'Réservons votre événement',
+      'contact.subtitle': 'Décrivez votre événement, on revient vers vous rapidement avec un devis.',
+      'contact.phone': 'Téléphone',
+      'contact.email': 'Email',
+      'contact.instagram': 'Instagram',
+      'contact.based': 'Basé à',
+      'contact.basedValue': 'Bierges — on se déplace pour vos événements',
+      'form.name': 'Nom',
+      'form.namePh': 'Votre nom',
+      'form.email': 'Email',
+      'form.date': "Date de l'événement",
+      'form.guests': "Nombre d'invités",
+      'form.guestsPh': 'ex. 80',
+      'form.message': 'Message',
+      'form.messagePh': "Type d'événement, lieu, envies particulières...",
+      'form.submit': 'Envoyer la demande',
+      'form.sending': 'Envoi en cours...',
+      'form.success': 'Message envoyé — on revient vers vous rapidement.',
+      'form.error': 'Une erreur est survenue. Contactez-nous directement par email.',
+      'footer.top': 'Retour en haut ↑',
+      'footer.credit': 'Site créé par Guillaume de Hollain',
+    },
+    en: {
+      'whatsapp.aria': 'Message us on WhatsApp',
+      'whatsapp.tooltip': 'Message us on WhatsApp',
+      'header.badge': 'Available for your 2026 events',
+      'header.cta': 'Book the truck',
+      'hero.label': 'Food truck & artisanal catering · Bierges',
+      'hero.title': 'Jacked potatoes<br class="hidden sm:block"> that make your events unforgettable',
+      'hero.subtitle': 'A fondant potato, a generous sauce, toppings that pack a punch — prepared on site for your weddings, corporate events, festivals and private parties.',
+      'hero.badge': 'Free quote within 24h',
+      'hero.cta': 'Book the food truck',
+      'hero.reassurance': 'No commitment, we reply fast',
+      'hero.readyBadge': 'Order ready',
+      'hero.loading': 'Loading',
+      'hero.scroll': 'Scroll',
+      'hero.typewriter': ['Weddings.', 'Corporate events.', 'Festivals.', 'Birthdays.'],
+      'concept.label': 'Perfect for',
+      'concept.weddings': 'Weddings',
+      'concept.companies': 'Companies',
+      'concept.festivals': 'Festivals',
+      'concept.birthdays': 'Birthdays',
+      'menu.label': 'The formula',
+      'menu.title': 'Build your jacked potato',
+      'menu.subtitle': 'Our specialty: the jacked potato — a base, a sauce of your choice, and generous toppings. Simple and devilishly effective.',
+      'menu.base.title': 'The base',
+      'menu.base.desc': 'An oven-baked potato, as fluffy as it gets, served on a bed of fresh watercress.',
+      'menu.sauce.title': 'Your sauce',
+      'menu.sauce.desc': 'Your choice: creamy cheese sauce or a well-spiced chili con carne.',
+      'menu.toppings.title': 'The toppings',
+      'menu.toppings.desc': 'Smoked bacon bits, fresh chives and grated cheddar, generously piled on.',
+      'menu.quote': '<span class="text-gold font-space font-semibold">Custom quote</span> — based on your guest count and the formula chosen for your event.',
+      'menu.quoteCta': 'Request a quote',
+      'services.label': 'Catering & events',
+      'services.title': 'We set up wherever you need us',
+      'services.weddings.title': 'Weddings',
+      'services.weddings.desc': "A food truck that delights your guests and gets people talking long after the last service.",
+      'services.companies.title': 'Companies',
+      'services.companies.desc': 'Seminars, product launches: a tasty break that beats sad sandwich platters.',
+      'services.festivals.title': 'Festivals & markets',
+      'services.festivals.desc': 'For your public events, fast service that keeps up even during rush hours.',
+      'services.private.title': 'Private parties',
+      'services.private.desc': 'Birthdays, get-togethers, family celebrations: a delicious touch that delights small and large groups alike.',
+      'process.label': 'Process',
+      'process.title': 'How it works',
+      'process.step1.title': '01 · Contact',
+      'process.step1.desc': 'Date, location, guest count — tell us about your event.',
+      'process.step2.title': '02 · Quote',
+      'process.step2.desc': 'A tailored menu and quote, within 24h.',
+      'process.step3.title': '03 · The Day',
+      'process.step3.desc': 'We arrive, set up, and cook on site, right in front of your guests.',
+      'process.step4.title': '04 · Enjoy',
+      'process.step4.desc': 'Your guests feast, and you enjoy the party without a worry.',
+      'contact.label': 'Contact',
+      'contact.title': "Let's book your event",
+      'contact.subtitle': "Describe your event, and we'll get back to you quickly with a quote.",
+      'contact.phone': 'Phone',
+      'contact.email': 'Email',
+      'contact.instagram': 'Instagram',
+      'contact.based': 'Based in',
+      'contact.basedValue': 'Bierges — we travel for your events',
+      'form.name': 'Name',
+      'form.namePh': 'Your name',
+      'form.email': 'Email',
+      'form.date': 'Event date',
+      'form.guests': 'Number of guests',
+      'form.guestsPh': 'e.g. 80',
+      'form.message': 'Message',
+      'form.messagePh': 'Type of event, location, special requests...',
+      'form.submit': 'Send request',
+      'form.sending': 'Sending...',
+      'form.success': "Message sent — we'll get back to you shortly.",
+      'form.error': 'Something went wrong. Please contact us directly by email.',
+      'footer.top': 'Back to top ↑',
+      'footer.credit': 'Site made by Guillaume de Hollain',
+    },
+    nl: {
+      'whatsapp.aria': 'Stuur ons een bericht op WhatsApp',
+      'whatsapp.tooltip': 'Stuur ons een bericht op WhatsApp',
+      'header.badge': 'Beschikbaar voor uw evenementen 2026',
+      'header.cta': 'Reserveer de truck',
+      'hero.label': 'Food truck & ambachtelijke catering · Bierges',
+      'hero.title': 'Gevulde aardappelen<br class="hidden sm:block"> die uw evenementen onvergetelijk maken',
+      'hero.subtitle': 'Een smeltende aardappel, een royale saus, toppings die knallen — ter plaatse bereid voor uw bruiloften, bedrijfsevenementen, festivals en privéfeesten.',
+      'hero.badge': 'Gratis offerte binnen 24u',
+      'hero.cta': 'Reserveer de food truck',
+      'hero.reassurance': 'Vrijblijvend, we reageren snel',
+      'hero.readyBadge': 'Bestelling klaar',
+      'hero.loading': 'Laden',
+      'hero.scroll': 'Scroll',
+      'hero.typewriter': ['Bruiloften.', 'Bedrijfsevenementen.', 'Festivals.', 'Verjaardagen.'],
+      'concept.label': 'Perfect voor',
+      'concept.weddings': 'Bruiloften',
+      'concept.companies': 'Bedrijven',
+      'concept.festivals': 'Festivals',
+      'concept.birthdays': 'Verjaardagen',
+      'menu.label': 'De formule',
+      'menu.title': 'Stel uw gevulde aardappel samen',
+      'menu.subtitle': 'Onze specialiteit: de jacked potato — een basis, een saus naar keuze, heerlijke toppings. Simpel en verschrikkelijk effectief.',
+      'menu.base.title': 'De basis',
+      'menu.base.desc': 'Een in de oven gebakken aardappel, heerlijk zacht, geserveerd op een bedje van verse waterkers.',
+      'menu.sauce.title': 'Uw saus',
+      'menu.sauce.desc': 'Naar keuze: romige kaassaus of een pittige chili con carne.',
+      'menu.toppings.title': 'De toppings',
+      'menu.toppings.desc': 'Gerookte spekjes, verse bieslook en geraspte cheddar, rijkelijk toegevoegd.',
+      'menu.quote': '<span class="text-gold font-space font-semibold">Op offerte</span> — afhankelijk van het aantal gasten en de gekozen formule voor uw evenement.',
+      'menu.quoteCta': 'Offerte aanvragen',
+      'services.label': 'Catering & evenementen',
+      'services.title': 'Wij komen overal waar u ons nodig heeft',
+      'services.weddings.title': 'Bruiloften',
+      'services.weddings.desc': 'Een food truck die uw gasten verwent en nog lang na het laatste bord wordt nabesproken.',
+      'services.companies.title': 'Bedrijven',
+      'services.companies.desc': 'Seminaries, productlanceringen: een lekkere pauze die een verademing is na de zoveelste broodjeslunch.',
+      'services.festivals.title': 'Festivals & markten',
+      'services.festivals.desc': 'Voor uw publieke evenementen, snelle service die het tempo aanhoudt, ook tijdens de drukte.',
+      'services.private.title': 'Privéfeesten',
+      'services.private.desc': 'Verjaardagen, familiefeesten, reünies: een smakelijke animatie die kleine en grote groepen verwent.',
+      'process.label': 'Verloop',
+      'process.title': 'Hoe het werkt',
+      'process.step1.title': '01 · Contact',
+      'process.step1.desc': 'Datum, locatie, aantal gasten — vertel ons over uw evenement.',
+      'process.step2.title': '02 · Offerte',
+      'process.step2.desc': 'Een menu en offerte op maat, binnen 24u.',
+      'process.step3.title': '03 · De Grote Dag',
+      'process.step3.desc': 'Wij komen aan, richten alles in en koken ter plaatse, voor de ogen van uw gasten.',
+      'process.step4.title': '04 · Genieten',
+      'process.step4.desc': 'Uw gasten smullen, en u geniet van het feest zonder zorgen.',
+      'contact.label': 'Contact',
+      'contact.title': 'Laten we uw evenement boeken',
+      'contact.subtitle': 'Beschrijf uw evenement, en wij komen snel bij u terug met een offerte.',
+      'contact.phone': 'Telefoon',
+      'contact.email': 'E-mail',
+      'contact.instagram': 'Instagram',
+      'contact.based': 'Gevestigd in',
+      'contact.basedValue': 'Bierges — wij komen naar uw evenement',
+      'form.name': 'Naam',
+      'form.namePh': 'Uw naam',
+      'form.email': 'E-mail',
+      'form.date': 'Datum van het evenement',
+      'form.guests': 'Aantal gasten',
+      'form.guestsPh': 'bv. 80',
+      'form.message': 'Bericht',
+      'form.messagePh': 'Type evenement, locatie, specifieke wensen...',
+      'form.submit': 'Aanvraag versturen',
+      'form.sending': 'Verzenden...',
+      'form.success': 'Bericht verzonden — we nemen snel contact met u op.',
+      'form.error': 'Er is iets misgegaan. Neem rechtstreeks contact met ons op via e-mail.',
+      'footer.top': 'Terug naar boven ↑',
+      'footer.credit': 'Site gemaakt door Guillaume de Hollain',
+    },
+  };
+
+  let currentLang = localStorage.getItem('cp_lang') || 'fr';
+  if (!translations[currentLang]) currentLang = 'fr';
+
+  function applyLanguage(lang) {
+    if (!translations[lang]) return;
+    currentLang = lang;
+    localStorage.setItem('cp_lang', lang);
+    document.documentElement.lang = lang;
+
+    document.querySelectorAll('[data-i18n]').forEach((el) => {
+      const key = el.getAttribute('data-i18n');
+      if (translations[lang][key] !== undefined) el.textContent = translations[lang][key];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach((el) => {
+      const key = el.getAttribute('data-i18n-html');
+      if (translations[lang][key] !== undefined) el.innerHTML = translations[lang][key];
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (translations[lang][key] !== undefined) el.setAttribute('placeholder', translations[lang][key]);
+    });
+    document.querySelectorAll('[data-i18n-aria-label]').forEach((el) => {
+      const key = el.getAttribute('data-i18n-aria-label');
+      if (translations[lang][key] !== undefined) el.setAttribute('aria-label', translations[lang][key]);
+    });
+
+    document.querySelectorAll('#langSwitcher .lang-btn').forEach((btn) => {
+      btn.classList.toggle('is-active', btn.getAttribute('data-lang') === lang);
+    });
+  }
+
+  document.querySelectorAll('#langSwitcher .lang-btn').forEach((btn) => {
+    btn.addEventListener('click', () => applyLanguage(btn.getAttribute('data-lang')));
+  });
+
+  applyLanguage(currentLang);
+
   document.getElementById('year').textContent = new Date().getFullYear();
 
   // ---------- custom cursor ----------
@@ -584,15 +863,15 @@
     gsap.ticker.lagSmoothing(0);
   }
 
-  // ---------- Hero looping typewriter ----------
+  // ---------- Hero looping typewriter (phrases follow the current language) ----------
   (function heroTypewriter() {
     const el = document.getElementById('heroTypewriter');
     if (!el) return;
-    const phrases = ['Mariages.', 'Événements d’entreprise.', 'Festivals.', 'Anniversaires.'];
     let phraseIndex = 0, charIndex = 0, deleting = false;
 
     function tick() {
-      const current = phrases[phraseIndex];
+      const phrases = translations[currentLang]['hero.typewriter'];
+      const current = phrases[phraseIndex % phrases.length];
       if (!deleting) {
         charIndex++;
         el.textContent = current.slice(0, charIndex);
@@ -730,7 +1009,7 @@
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    btnLabel.textContent = 'Envoi en cours...';
+    btnLabel.textContent = translations[currentLang]['form.sending'];
     statusEl.classList.add('hidden');
 
     try {
@@ -743,19 +1022,19 @@
 
       statusEl.classList.remove('hidden');
       if (data.success) {
-        statusEl.textContent = 'Message envoyé — on revient vers vous rapidement.';
+        statusEl.textContent = translations[currentLang]['form.success'];
         statusEl.className = 'text-xs mt-1 text-green-700';
         form.reset();
       } else {
-        statusEl.textContent = "Une erreur est survenue. Contactez-nous directement par email.";
+        statusEl.textContent = translations[currentLang]['form.error'];
         statusEl.className = 'text-xs mt-1 text-brick';
       }
     } catch (err) {
       statusEl.classList.remove('hidden');
-      statusEl.textContent = "Une erreur est survenue. Contactez-nous directement par email.";
+      statusEl.textContent = translations[currentLang]['form.error'];
       statusEl.className = 'text-xs mt-1 text-brick';
     } finally {
-      btnLabel.textContent = 'Envoyer la demande';
+      btnLabel.textContent = translations[currentLang]['form.submit'];
     }
   });
 </script>
