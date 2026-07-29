@@ -145,18 +145,6 @@
     background-size: 4px 4px;
   }
 
-  /* steam */
-  .steam { position: absolute; bottom: 100%; opacity: 0; filter: blur(1px); }
-  .steam-1 { animation: rise 3.2s ease-in-out infinite; }
-  .steam-2 { animation: rise 3.2s ease-in-out infinite 1.1s; }
-  .steam-3 { animation: rise 3.2s ease-in-out infinite 2.1s; }
-  @keyframes rise {
-    0%   { transform: translateY(0) translateX(0) scale(0.8); opacity: 0; }
-    15%  { opacity: 0.55; }
-    50%  { transform: translateY(-22px) translateX(4px) scale(1); opacity: 0.4; }
-    100% { transform: translateY(-46px) translateX(-4px) scale(1.15); opacity: 0; }
-  }
-
   .reveal { opacity: 0; transform: translateY(24px); }
 
   .link-underline {
@@ -240,7 +228,7 @@
           src="images/hero-guillaume-patate.jpg"
           alt=""
           aria-hidden="true"
-          class="hero-bg-photo absolute inset-0 w-full h-full object-cover object-[50%_15%]"
+          class="hero-bg-photo absolute inset-0 w-full h-full object-cover object-[50%_35%]"
         />
         <div class="absolute inset-0 bg-ink/60"></div>
       </div>
@@ -280,15 +268,9 @@
       <div id="hero-visual-wrap" class="relative z-10 w-full flex-1 flex items-center justify-center px-6 pb-6">
         <div class="relative w-56 h-56 sm:w-64 sm:h-64">
 
-          <div id="readyBadge" class="absolute -top-4 left-1/2 -translate-x-1/2 opacity-0 scale-75 inline-flex items-center gap-1.5 bg-terracotta text-ink font-space font-semibold text-xs px-3.5 py-1.5 rounded-full shadow-lg whitespace-nowrap z-20">
+          <div id="readyBadge" class="absolute top-1 left-1/2 -translate-x-1/2 opacity-0 scale-75 inline-flex items-center gap-1.5 bg-terracotta text-ink font-space font-semibold text-xs px-3.5 py-1.5 rounded-full shadow-lg whitespace-nowrap z-20">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
             Formule prête
-          </div>
-
-          <div class="absolute left-1/2 top-2 -translate-x-1/2 flex gap-4 text-3xl text-cream/40 z-10">
-            <span class="steam steam-1">〜</span>
-            <span class="steam steam-2">〜</span>
-            <span class="steam steam-3">〜</span>
           </div>
 
           <!-- lit de cressonnette -->
