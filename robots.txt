@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://REMPLACER-PAR-URL-CHAUD-PATATE.pages.dev/sitemap.xml
